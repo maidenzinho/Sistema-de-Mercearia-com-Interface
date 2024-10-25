@@ -8,7 +8,6 @@ from sqlalchemy import create_engine, Column, Integer, String, Float, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-# Configuração do SQLAlchemy
 URLBANCO = "mysql+pymysql://root@localhost/mercearia"
 motor = create_engine(URLBANCO)
 Base = declarative_base()
@@ -53,7 +52,6 @@ class MainWindow(QMainWindow):
         
         self.layout = QVBoxLayout()
 
-        # Interfaces
         self.categoria_ui()
         self.produto_ui()
         self.cliente_ui()
@@ -75,7 +73,6 @@ class MainWindow(QMainWindow):
         self.categoria_delete_button = QPushButton('Deletar Categoria')
         self.categoria_delete_button.clicked.connect(self.deletar_categoria)
 
-        # Botão de refresh
         self.categoria_refresh_button = QPushButton('Atualizar Lista')
         self.categoria_refresh_button.clicked.connect(self.listar_categorias)
 
@@ -115,7 +112,6 @@ class MainWindow(QMainWindow):
         self.produto_delete_button = QPushButton('Deletar Produto')
         self.produto_delete_button.clicked.connect(self.deletar_produto)
 
-        # Botão de refresh
         self.produto_refresh_button = QPushButton('Atualizar Lista')
         self.produto_refresh_button.clicked.connect(self.listar_produtos)
 
@@ -153,7 +149,6 @@ class MainWindow(QMainWindow):
         self.cliente_delete_button = QPushButton('Deletar Cliente')
         self.cliente_delete_button.clicked.connect(self.deletar_cliente)
 
-        # Botão de refresh
         self.cliente_refresh_button = QPushButton('Atualizar Lista')
         self.cliente_refresh_button.clicked.connect(self.listar_clientes)
 
@@ -191,7 +186,6 @@ class MainWindow(QMainWindow):
         self.venda_delete_button = QPushButton('Deletar Venda')
         self.venda_delete_button.clicked.connect(self.deletar_venda)
 
-        # Botão de refresh
         self.venda_refresh_button = QPushButton('Atualizar Lista')
         self.venda_refresh_button.clicked.connect(self.listar_vendas)
 
@@ -211,7 +205,6 @@ class MainWindow(QMainWindow):
 
         self.listar_vendas()
 
-    # Funções para Categoria
     def adicionar_categoria(self):
         nome = self.categoria_nome_input.text()
         if nome:
@@ -265,7 +258,6 @@ class MainWindow(QMainWindow):
         categoria_nome = self.categoria_table.item(row, 1).text()
         self.categoria_nome_input.setText(categoria_nome)
 
-    # Funções para Produto
     def adicionar_produto(self):
         nome = self.produto_nome_input.text()
         preco = self.produto_preco_input.text()
@@ -336,12 +328,11 @@ class MainWindow(QMainWindow):
         self.produto_nome_input.setText(produto_nome)
         self.produto_preco_input.setText(self.produto_table.item(row, 2).text())
         self.produto_estoque_input.setText(self.produto_table.item(row, 3).text())
-        # Aqui, você deve buscar o ID da categoria do produto selecionado para preenchê-lo.
+
         produto_id = int(self.produto_table.item(row, 0).text())
         produto = sessao.query(Produto).get(produto_id)
         self.produto_categoria_input.setText(str(produto.categoriaid))
 
-    # Funções para Cliente
     def adicionar_cliente(self):
         nome = self.cliente_nome_input.text()
         email = self.cliente_email_input.text()
@@ -409,7 +400,6 @@ class MainWindow(QMainWindow):
         self.cliente_email_input.setText(self.cliente_table.item(row, 2).text())
         self.cliente_telefone_input.setText(self.cliente_table.item(row, 3).text())
 
-    # Funções para Venda
     def adicionar_venda(self):
         produtoid = self.venda_produto_input.text()
         clienteid = self.venda_cliente_input.text()
@@ -477,7 +467,7 @@ class MainWindow(QMainWindow):
         self.venda_quantidade_input.setText(self.venda_table.item(row, 3).text())
 
 if __name__ == '__main__':
-    Base.metadata.create_all(motor)  # Criação das tabelas
+    Base.metadata.create_all(motor)
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
